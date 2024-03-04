@@ -16,9 +16,12 @@ function AddTask(props) {
     const { projectId } = props;
     // Create an object representing the body of the POST request
     const requestBody = { title, description, projectId };
+    // get token from localStorage for header
+    const storedToken = localStorage.getItem('authToken');
 
     axios
-      .post(`${API_URL}/api/tasks`, requestBody)
+      .post(`${API_URL}/api/tasks`, requestBody,
+      { headers: { Authorization: `Bearer ${storedToken}` } })
       .then((response) => {
         // Reset the state to clear the inputs
         setTitle("");
